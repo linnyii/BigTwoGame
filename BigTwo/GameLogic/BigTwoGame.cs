@@ -8,7 +8,7 @@ public class BigTwoGame
 {
     private readonly List<Player> _players;
     private readonly Deck _deck;
-    private readonly Card _clubThree = new(new Suit("♣", 0, "C"), new Rank("3", 0,3, "Three"));
+    private readonly Card _clubThree = new(new Suit("♣", 0, "C"), new Rank("3", 0,3));
     private const int MaxHandCardNumber = 13;
     private GameState GameState { get; }
 
@@ -44,9 +44,10 @@ public class BigTwoGame
         {
             player.SortHandCards();
         }
-
-        GameState.CurrentPlayerIndex = FindClubThreePlayer();
-        GameState.IsFirstRound = true;
+        
+        
+        GameState.SetCurrentPlayerIndex(FindClubThreePlayer());
+        GameState.SetIsFirstRound(true);
         ConsoleUI.DisPlayNewRound();
     }
 
@@ -105,7 +106,8 @@ public class BigTwoGame
             {
                 return (false, "第一手必須包含梅花3！");
             }
-            GameState.IsFirstRound = false;
+            
+            GameState.SetIsFirstRound(false);
         }
 
         var (canPlay, compareMessage) = ComparingSize(pattern);
@@ -155,7 +157,7 @@ public class BigTwoGame
         GameState.ClearTable();
             
         var topPlayerIndex = _players.IndexOf(GameState.TopPlayer!);
-        GameState.CurrentPlayerIndex = topPlayerIndex;
+        GameState.SetCurrentPlayerIndex(topPlayerIndex);
             
         return true;
     }
@@ -174,7 +176,7 @@ public class BigTwoGame
 
     private void NextPlayer()
     {
-        GameState.CurrentPlayerIndex = (GameState.CurrentPlayerIndex + 1) % 4;
+        GameState.SetCurrentPlayerIndex((GameState.CurrentPlayerIndex + 1) % 4);
     }
 
     public void StartGame()

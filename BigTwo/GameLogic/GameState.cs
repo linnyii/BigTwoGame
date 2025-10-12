@@ -9,11 +9,11 @@ public class GameState
 
     public CardPatternValue? TopPlay { get; private set; }
 
-    public int CurrentPlayerIndex { get; set; }
+    public int CurrentPlayerIndex { get; private set; }
 
-    public int PassCount { get; private set; }
+    private int PassCount { get; set; }
 
-    public bool IsFirstRound { get; set; }
+    public bool IsFirstRound { get; private set; }
 
     public GameState()
     {
@@ -24,14 +24,14 @@ public class GameState
     {
         TopPlayer = null;
         TopPlay = null;
-        CurrentPlayerIndex = 0;
-        PassCount = 0;
+        SetCurrentPlayerIndex(0);
+        ResetPassCount();
         IsFirstRound = true;
     }
 
     public void IncrementPassCount()
     {
-        PassCount++;
+        PassCount += 1;
     }
 
     public void ResetPassCount()
@@ -42,19 +42,28 @@ public class GameState
     public void ClearTable()
     {
         TopPlay = null;
-        PassCount = 0;
+        ResetPassCount();
     }
 
     public void UpdateTopPlay(Player player, CardPatternValue pattern)
     {
         TopPlayer = player;
         TopPlay = pattern;
-        PassCount = 0;
+        ResetPassCount();
     }
 
     public bool HasThreePass()
     {
         return PassCount >= 3;
     }
-}
 
+    public void SetCurrentPlayerIndex(int currentPlayer)
+    {
+        CurrentPlayerIndex = currentPlayer;
+    }
+
+    public void SetIsFirstRound(bool firstRound)
+    {
+        IsFirstRound = firstRound;
+    }
+}

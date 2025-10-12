@@ -43,7 +43,7 @@ public class StraightHandler : CardPatternHandler
         return false;
     }
 
-    private bool IsConsecutive(List<int> values)
+    private static bool IsConsecutive(List<int> values)
     {
         for (var i = 0; i < values.Count - 1; i++)
         {

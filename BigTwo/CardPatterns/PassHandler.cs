@@ -2,8 +2,6 @@ using BigTwo.Models;
 
 namespace BigTwo.CardPatterns;
 
-/// Pass 處理器
-/// 處理玩家選擇不出牌的情況
 public class PassHandler : CardPatternHandler
 {
     protected override bool CanHandle(List<Card> cards)

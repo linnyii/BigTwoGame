@@ -4,7 +4,6 @@ public class Card(Suit suit, Rank rank) : IComparable<Card>, IEquatable<Card>
 {
     public Suit Suit { get; } = suit;
     public Rank Rank { get; } = rank;
-    public string SuitSymbol => Suit.Symbol;
     public string RankSymbol => Rank.Symbol;
 
     public int CompareTo(Card? other)
