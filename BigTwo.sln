@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BigTwo", "BigTwo\BigTwo.csproj", "{C98F29C0-DF69-4B00-A1AD-9E8A5752FB52}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C98F29C0-DF69-4B00-A1AD-9E8A5752FB52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C98F29C0-DF69-4B00-A1AD-9E8A5752FB52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C98F29C0-DF69-4B00-A1AD-9E8A5752FB52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C98F29C0-DF69-4B00-A1AD-9E8A5752FB52}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
