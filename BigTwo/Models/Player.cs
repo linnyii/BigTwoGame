@@ -44,7 +44,7 @@ public class Player(string name, CardPatternHandler cardPatternHandler)
         return Hand.Cards.ToList();
     }
 
-    public CardPatternValue? ValidatePlay(List<Card> cards)
+    public CardPatternValue ValidatePlay(List<Card> cards)
     {
         return CardPatternHandler.Handle(cards);
     }

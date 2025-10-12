@@ -30,8 +30,7 @@ public static class Program
         handler.SetNext(new SingleHandler())
             .SetNext(new PairHandler())
             .SetNext(new StraightHandler())
-            .SetNext(new FullHouseHandler())
-            .SetNext(new InvalidHandler());
+            .SetNext(new FullHouseHandler());
         
         return handler;
     }

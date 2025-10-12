@@ -83,7 +83,7 @@ public class BigTwoGame
         var currentPlayer = GetCurrentPlayer();
         var pattern = currentPlayer.ValidatePlay(cards);
 
-        if (pattern!.IsInvalid)
+        if (pattern.IsInvalid)
         {
             return (false, "無效的牌型！");
         }

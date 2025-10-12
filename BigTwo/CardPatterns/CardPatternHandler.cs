@@ -12,14 +12,23 @@ public abstract class CardPatternHandler
         return handler;
     }
 
-    public CardPatternValue? Handle(List<Card> cards)
+    public CardPatternValue Handle(List<Card> cards)
     {
         if (CanHandle(cards) && Validate(cards))
         {
             return GetPattern(cards);
         }
 
-        return Next?.Handle(cards);
+        if (Next != null)
+        {
+            return Next.Handle(cards);
+        }
+
+        return new CardPatternValue(
+            CardPatternType.Invalid,
+            0,
+            cards
+        );
     }
 
     protected abstract bool CanHandle(List<Card> cards);
