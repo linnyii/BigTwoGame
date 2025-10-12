@@ -7,31 +7,20 @@ public static class InputHandler
     private const int TotalPlayers = 4;
     private static readonly char[] Separator = [' ', ',', '\t'];
 
-    public static (bool isQuit, bool isPass, List<Card> cards) GetPlayerInput(Player player)
+    public static List<Card> GetPlayerInput(Player player)
     {
         while (true)
         {
-            var input = Console.ReadLine()?.Trim().ToLower();
+            var input = Console.ReadLine()?.Trim();
 
             if (InValid(input))
             {
-                Console.WriteLine("請輸入內容！(輸入卡牌編號、'pass' 跳過、或 'quit' 離開)");
+                Console.WriteLine("請輸入內容！(輸入卡牌編號或 -1 跳過)");
                 Console.Write("請重新輸入: ");
                 continue;
             }
 
-            if (input is "quit" or "exit")
-            {
-                return (true, false, []);
-            }
-
-            if (input is "pass" or "p")
-            {
-                return (false, true, []);
-            }
-
-            var selectedCards = ParseCardIndices(input!, player);
-            return (false, false, selectedCards);
+            return ParseCardIndices(input!, player);
         }
     }
 

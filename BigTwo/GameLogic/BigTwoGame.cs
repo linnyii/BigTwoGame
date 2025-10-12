@@ -8,59 +8,22 @@ public class BigTwoGame
 {
     private readonly List<Player> _players;
     private readonly Deck _deck;
-    private CardPatternHandler _cardPatternHandler;
     private readonly Card _clubThree = new(new Suit("♣", 0, "C"), new Rank("3", 0,3, "Three"));
     private const int MaxHandCardNumber = 13;
-    private const int TotalPLayers = 4;
     private GameState GameState { get; }
 
-    public BigTwoGame(List<string> playerNames)
+    public BigTwoGame(List<Player> players)
     {
-        _players = [];
+        _players = players;
         _deck = new Deck();
         GameState = new GameState();
-        //need modify
-        _cardPatternHandler = null!;
         
-        Initialize(playerNames);
+        Initialize();
     }
 
-    private void Initialize(List<string> playerNames)
+    private void Initialize()
     {
-        AddPlayersIntoGame(playerNames);
-
         _deck.Initialize();
-
-        //can move to Main function to create the chain
-        //and DI into players 
-        CreateHandlerChain();
-    }
-
-    private void CreateHandlerChain()
-    {
-        _cardPatternHandler = new PassHandler();
-        _cardPatternHandler.SetNext(new SingleHandler())
-            .SetNext(new PairHandler())
-            .SetNext(new StraightHandler())
-            .SetNext(new FullHouseHandler())
-            .SetNext(new InvalidHandler());
-    }
-
-    private void AddPlayersIntoGame(List<string> playerNames)
-    {
-        for (var playerIndex = 0; playerIndex < TotalPLayers; playerIndex++)
-        {
-            var playerName = IsValidName(playerNames, playerIndex) 
-                ? playerNames[playerIndex].Trim() 
-                : $"玩家 {playerIndex + 1}";
-            
-            _players.Add(new Player(playerName));
-        }
-    }
-
-    private static bool IsValidName(List<string> playerNames, int playerIndex)
-    {
-        return !string.IsNullOrWhiteSpace(playerNames[playerIndex]);
     }
 
     private void InitializeFirstRound()
@@ -119,8 +82,7 @@ public class BigTwoGame
     private (bool validPlayCard, string message) HandlePlayerPlay(List<Card> cards)
     {
         var currentPlayer = GetCurrentPlayer();
-        
-        var pattern = ValidatePlayerPlay(cards);
+        var pattern = currentPlayer.ValidatePlay(cards);
 
         if (pattern!.IsInvalid)
         {
@@ -175,11 +137,6 @@ public class BigTwoGame
         var message = $"玩家 {currentPlayer.Name} 打出了 {typeName} {cardsDisplay}";
 
         return (true, message);
-    }
-
-    private CardPatternValue? ValidatePlayerPlay(List<Card> cards)
-    {
-        return _cardPatternHandler.Handle(cards);
     }
 
     private (bool canPlay, string message) ComparingSize(CardPatternValue pattern)
@@ -240,25 +197,8 @@ public class BigTwoGame
             ConsoleUI.DisplayCurrentPlayer(currentPlayer);
             ConsoleUI.DisplayHand(currentPlayer);
 
-            //use foreach to let each player do action
-            //push Player Input into Player
-            //and player can use handler to determine cardPattern
-            // when BigTwoGame Get the cardPattern , determine if is valid, otherwise ask player to play card again
-            var (isQuit, isPass, selectedCards) = InputHandler.GetPlayerInput(currentPlayer);
-
-            //No Support IsQuit
-            if (isQuit)
-            {
-                if (InputHandler.GetConfirmation("確定要退出遊戲嗎？"))
-                {
-                    Console.WriteLine("\n感謝遊玩！再見！");
-                    break;
-                }
-                continue;
-            }
-
-            var cardsToPlay = isPass ? [] : selectedCards;
-            var (success, message) = HandlePlayerPlay(cardsToPlay);
+            var  selectedCards= InputHandler.GetPlayerInput(currentPlayer);
+            var (success, message) = HandlePlayerPlay(selectedCards);
 
             if (!success)
             {

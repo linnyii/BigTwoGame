@@ -1,10 +1,13 @@
+using BigTwo.CardPatterns;
+
 namespace BigTwo.Models;
 
-public class Player(string name)
+public class Player(string name, CardPatternHandler cardPatternHandler)
 {
     public string Name { get; } = name;
     public Hand Hand { get; } = new();
     public bool IsWinner { get; set; }
+    private CardPatternHandler CardPatternHandler { get; } = cardPatternHandler;
 
     public void ReceiveCard(Card card)
     {
@@ -16,9 +19,6 @@ public class Player(string name)
         Hand.RemoveCards(cards);
     }
 
-    /// <summary>
-    /// 檢查是否已出完所有牌
-    /// </summary>
     public bool HasNoCards()
     {
         return Hand.Count == 0;
@@ -42,6 +42,11 @@ public class Player(string name)
     public List<Card> GetHandCards()
     {
         return Hand.Cards.ToList();
+    }
+
+    public CardPatternValue? ValidatePlay(List<Card> cards)
+    {
+        return CardPatternHandler.Handle(cards);
     }
 }
 
