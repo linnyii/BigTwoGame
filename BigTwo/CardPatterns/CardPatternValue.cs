@@ -2,7 +2,7 @@ using BigTwo.Models;
 
 namespace BigTwo.CardPatterns;
 
-public class CardPatternValue(CardPatternType type, int size, List<Card> playCards) : IComparable<CardPatternValue>
+public class CardPatternValue(CardPatternType type, int size, List<Card> playCards)
 {
     public CardPatternType Type { get; } = type;
 
@@ -10,24 +10,8 @@ public class CardPatternValue(CardPatternType type, int size, List<Card> playCar
 
     public List<Card> PlayCards { get; } = playCards;
 
-    public int CompareTo(CardPatternValue? other)
-    {
-        if (other == null) return 1;
-
-        // 不同牌型無法比較
-        if (Type != other.Type)
-            return 0;
-
-        // 比較Size
-        return Size.CompareTo(other.Size);
-    }
-
     public bool IsBiggerThan(CardPatternValue other)
     {
-        // 必須是相同牌型才能比較
-        if (Type != other.Type)
-            return false;
-
         return Size > other.Size;
     }
 

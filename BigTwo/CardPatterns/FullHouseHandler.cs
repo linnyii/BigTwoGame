@@ -2,10 +2,8 @@ using BigTwo.Models;
 
 namespace BigTwo.CardPatterns;
 
-/// <summary>
 /// 葫蘆處理器
 /// 三張相同點數 + 兩張相同點數
-/// </summary>
 public class FullHouseHandler : CardPatternHandler
 {
     protected override bool CanHandle(List<Card> cards)

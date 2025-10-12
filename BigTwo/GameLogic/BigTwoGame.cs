@@ -183,9 +183,10 @@ public class BigTwoGame
         
         while (true)
         {
+            ConsoleUI.DisPlayTopPlayerPlay(GameState.TopPlayer, GameState.TopPlay);
             var currentPlayer = GetCurrentPlayer();
             ConsoleUI.DisplayCurrentPlayer(currentPlayer);
-            ConsoleUI.DisplayHand(currentPlayer);
+            ConsoleUI.DisplayerHandCards(currentPlayer);
 
             var  selectedCards= InputHandler.GetPlayerInput(currentPlayer);
             var (success, message) = HandlePlayerPlay(selectedCards);

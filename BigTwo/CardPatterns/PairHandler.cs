@@ -2,10 +2,8 @@ using BigTwo.Models;
 
 namespace BigTwo.CardPatterns;
 
-/// <summary>
 /// 對子處理器
 /// 兩張相同點數的牌
-/// </summary>
 public class PairHandler : CardPatternHandler
 {
     protected override bool CanHandle(List<Card> cards)

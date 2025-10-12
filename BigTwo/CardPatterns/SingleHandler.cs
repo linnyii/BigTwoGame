@@ -2,9 +2,7 @@ using BigTwo.Models;
 
 namespace BigTwo.CardPatterns;
 
-/// <summary>
 /// 單張牌處理器
-/// </summary>
 public class SingleHandler : CardPatternHandler
 {
     protected override bool CanHandle(List<Card> cards)

@@ -2,10 +2,8 @@ using BigTwo.Models;
 
 namespace BigTwo.CardPatterns;
 
-/// <summary>
 /// 順子處理器
 /// 五張連續點數的牌
-/// </summary>
 public class StraightHandler : CardPatternHandler
 {
     protected override bool CanHandle(List<Card> cards)

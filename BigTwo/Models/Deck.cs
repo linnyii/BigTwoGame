@@ -45,10 +45,5 @@ public class Deck
         _cards.RemoveAt(0);
         return card;
     }
-
-    /// <summary>
-    /// 剩餘牌數
-    /// </summary>
-    public int RemainingCards => _cards.Count;
 }
 
