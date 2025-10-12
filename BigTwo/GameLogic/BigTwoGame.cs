@@ -56,8 +56,7 @@ public class BigTwoGame
         {
             foreach (var player in _players)
             {
-                var card = _deck.DealingCard();
-                player.ReceiveCard(card);
+                player.ReceiveCard(_deck.DealingCard());
             }
         }
     }
@@ -123,18 +122,9 @@ public class BigTwoGame
         {
             return (true, $"玩家 {currentPlayer.Name} Pass");
         }
-
-        var typeName = pattern.Type switch
-        {
-            CardPatternType.Single => "單張",
-            CardPatternType.Pair => "對子",
-            CardPatternType.Straight => "順子",
-            CardPatternType.FullHouse => "葫蘆",
-            _ => pattern.Type.ToString()
-        };
-
+        
         var cardsDisplay = string.Join(" ", pattern.PlayCards);
-        var message = $"玩家 {currentPlayer.Name} 打出了 {typeName} {cardsDisplay}";
+        var message = $"玩家 {currentPlayer.Name} 打出了 {pattern.GetTypeMandarinName()} {cardsDisplay}";
 
         return (true, message);
     }

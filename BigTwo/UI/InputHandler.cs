@@ -50,14 +50,11 @@ public static class InputHandler
         return selectedCards;
     }
 
-    /// <summary>
-    /// 取得確認輸入
-    /// </summary>
     public static bool GetConfirmation(string message)
     {
         Console.Write($"{message} (y/n): ");
-        string? input = Console.ReadLine()?.Trim().ToLower();
-        return input == "y" || input == "yes";
+        var input = Console.ReadLine()?.Trim().ToLower();
+        return input is "y" or "yes";
     }
 
     public static List<string> GetPlayerNames()
