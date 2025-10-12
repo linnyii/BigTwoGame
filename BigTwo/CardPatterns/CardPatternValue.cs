@@ -10,9 +10,9 @@ public class CardPatternValue(CardPatternType type, int size, List<Card> playCar
 
     public List<Card> PlayCards { get; } = playCards;
 
-    public bool IsBiggerThan(CardPatternValue other)
+    public bool IsBiggerThan(CardPatternValue otherPatternValue)
     {
-        return Size > other.Size;
+        return Size > otherPatternValue.Size;
     }
 
     public bool IsPass => Type == CardPatternType.Pass;

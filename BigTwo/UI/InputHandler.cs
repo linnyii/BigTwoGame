@@ -49,7 +49,7 @@ public static class InputHandler
         return selectedCards;
     }
 
-    public static bool GetConfirmation(string message)
+    public static bool ConfirmPlayAgain(string message)
     {
         Console.Write($"{message} (y/n): ");
         var input = Console.ReadLine()?.Trim().ToLower();

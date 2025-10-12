@@ -17,24 +17,13 @@ public class BigTwoGame
         _players = players;
         _deck = new Deck();
         GameState = new GameState();
-        
-        Initialize();
-    }
-
-    private void Initialize()
-    {
         _deck.Initialize();
     }
 
     private void InitializeFirstRound()
     {
         GameState.Reset();
-
-        foreach (var player in _players)
-        {
-            player.IsWinner = false;
-        }
-
+        
         _deck.Initialize();
         _deck.Shuffle();
 
@@ -96,7 +85,7 @@ public class BigTwoGame
                 return (false, "桌面是空的，不能Pass！");
             }
 
-            GameState.IncrementPassCount();
+            GameState.IncreasePassCount();
             return (true, $"{currentPlayer.Name} Pass");
         }
 
@@ -118,7 +107,7 @@ public class BigTwoGame
 
         currentPlayer.PlayCards(cards);
 
-        GameState.UpdateTopPlay(currentPlayer, pattern);
+        GameState.UpdateTopPlayerPlay(currentPlayer, pattern);
 
         if (pattern.Type == CardPatternType.Pass)
         {
@@ -164,17 +153,10 @@ public class BigTwoGame
 
     private Player? CheckWinner()
     {
-        foreach (var player in _players)
-        {
-            if (!player.HasNoCards()) continue;
-            player.IsWinner = true;
-            return player;
-        }
-
-        return null;
+        return _players.FirstOrDefault(player => player.HasNoCards());
     }
 
-    private void NextPlayer()
+    private void MoveToNextPlayer()
     {
         GameState.SetCurrentPlayerIndex((GameState.CurrentPlayerIndex + 1) % 4);
     }
@@ -195,7 +177,7 @@ public class BigTwoGame
 
             if (!success)
             {
-                ConsoleUI.DisplayMessage(message, isError: true);
+                ConsoleUI.DisplayMessage(message);
                 ConsoleUI.WaitForKey();
                 continue;
             }
@@ -206,7 +188,7 @@ public class BigTwoGame
                 ConsoleUI.WaitForKey();
                 ConsoleUI.DisplayWinner(winner);
                 
-                if (InputHandler.GetConfirmation("\n要再玩一局嗎？"))
+                if (InputHandler.ConfirmPlayAgain("\n要再玩一局嗎？"))
                 {
                     InitializeFirstRound();
                     
@@ -225,7 +207,7 @@ public class BigTwoGame
                 continue;
             }
 
-            NextPlayer();
+            MoveToNextPlayer();
             ConsoleUI.WaitForKey();
         }
     }

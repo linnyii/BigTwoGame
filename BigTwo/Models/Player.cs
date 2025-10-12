@@ -5,43 +5,37 @@ namespace BigTwo.Models;
 public class Player(string name, CardPatternHandler cardPatternHandler)
 {
     public string Name { get; } = name;
-    public Hand Hand { get; } = new();
-    public bool IsWinner { get; set; }
+    public HandCards HandCards { get; } = new();
     private CardPatternHandler CardPatternHandler { get; } = cardPatternHandler;
 
     public void ReceiveCard(Card card)
     {
-        Hand.AddCard(card);
+        HandCards.AddCard(card);
     }
 
     public void PlayCards(List<Card> cards)
     {
-        Hand.RemoveCards(cards);
+        HandCards.RemoveCards(cards);
     }
 
     public bool HasNoCards()
     {
-        return Hand.Count == 0;
+        return HandCards.Count == 0;
     }
-
-    public override string ToString()
-    {
-        return $"{Name} ({Hand.Count} 張牌)";
-    }
-
+    
     public void SortHandCards()
     {
-        Hand.Sort();
+        HandCards.Sort();
     }
 
     public bool HasClubThree()
     {
-        return Hand.ContainsClubThree();
+        return HandCards.ContainsClubThree();
     }
 
     public List<Card> GetHandCards()
     {
-        return Hand.Cards.ToList();
+        return HandCards.Cards.ToList();
     }
 
     public CardPatternValue ValidatePlay(List<Card> cards)

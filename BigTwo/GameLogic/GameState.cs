@@ -29,7 +29,7 @@ public class GameState
         IsFirstRound = true;
     }
 
-    public void IncrementPassCount()
+    public void IncreasePassCount()
     {
         PassCount += 1;
     }
@@ -45,7 +45,7 @@ public class GameState
         ResetPassCount();
     }
 
-    public void UpdateTopPlay(Player player, CardPatternValue pattern)
+    public void UpdateTopPlayerPlay(Player player, CardPatternValue pattern)
     {
         TopPlayer = player;
         TopPlay = pattern;

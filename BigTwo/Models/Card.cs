@@ -6,12 +6,12 @@ public class Card(Suit suit, Rank rank) : IComparable<Card>, IEquatable<Card>
     public Rank Rank { get; } = rank;
     public string RankSymbol => Rank.Symbol;
 
-    public int CompareTo(Card? other)
+    public int CompareTo(Card? otherCard)
     {
-        if (other == null) return 1;
+        if (otherCard == null) return 1;
 
-        var rankComparison = Rank.CompareTo(other.Rank);
-        return rankComparison != 0 ? rankComparison : Suit.CompareTo(other.Suit);
+        var rankComparison = Rank.CompareTo(otherCard.Rank);
+        return rankComparison != 0 ? rankComparison : Suit.CompareTo(otherCard.Suit);
     }
 
     public bool Equals(Card? other)

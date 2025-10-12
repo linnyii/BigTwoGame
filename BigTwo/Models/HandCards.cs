@@ -1,6 +1,6 @@
 namespace BigTwo.Models;
 
-public class Hand
+public class HandCards
 {
     public readonly List<Card> Cards = [];
     public int Count => Cards.Count;

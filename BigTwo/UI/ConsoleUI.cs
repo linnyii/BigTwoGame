@@ -8,16 +8,14 @@ public static class ConsoleUI
     public static void DisplayTitle()
     {
         Console.Clear();
-        Console.WriteLine("====================================");
         Console.WriteLine("         welcome Big Two            ");
-        Console.WriteLine("====================================");
         Console.WriteLine();
     }
 
     public static void DisplayerHandCards(Player player)
     {
         Console.WriteLine($"{player.Name} 的手牌:");
-        var cards = player.Hand.Cards.ToList();
+        var cards = player.GetHandCards();
         
         for (var i = 0; i < cards.Count; i++)
         {
@@ -33,7 +31,7 @@ public static class ConsoleUI
         Console.WriteLine();
     }
 
-    public static void DisplayMessage(string message, bool isError = false)
+    public static void DisplayMessage(string message, bool isError = true)
     {
         if (isError)
         {
