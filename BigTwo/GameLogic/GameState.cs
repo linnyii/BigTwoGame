@@ -49,10 +49,10 @@ public class GameState
     {
         TopPlayer = player;
         TopPlay = pattern;
-        PassCount = 0; // 有人出牌，重置Pass計數
+        PassCount = 0;
     }
 
-    public bool IsThreePass()
+    public bool HasThreePass()
     {
         return PassCount >= 3;
     }

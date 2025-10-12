@@ -8,12 +8,12 @@ namespace BigTwo.CardPatterns;
 /// </summary>
 public class StraightHandler : CardPatternHandler
 {
-    public override bool CanHandle(List<Card> cards)
+    protected override bool CanHandle(List<Card> cards)
     {
         return cards.Count == 5;
     }
 
-    public override bool Validate(List<Card> cards)
+    protected override bool Validate(List<Card> cards)
     {
         var sorted = cards.OrderBy(c => c.Rank.OrderValue).ToList();
         var orderValues = sorted.Select(c => c.Rank.OrderValue).ToList();
@@ -57,16 +57,10 @@ public class StraightHandler : CardPatternHandler
         return true;
     }
 
-    public override CardPatternValue GetPattern(List<Card> cards)
+    protected override CardPatternValue GetPattern(List<Card> cards)
     {
-        if (!Validate(cards))
-        {
-            return new CardPatternValue(CardPatternType.Invalid, 0, cards);
-        }
-
-        // 順子的大小由最大的牌決定（使用 SizeValue 比較）
-        Card highCard = cards.MaxBy(c => c.Rank.SizeValue)!;
-        int size = CalculateSize(highCard);
+        var highCard = cards.MaxBy(c => c.Rank.SizeValue)!;
+        var size = highCard.CalculateSize();
 
         return new CardPatternValue(
             CardPatternType.Straight,

@@ -8,22 +8,22 @@ namespace BigTwo.CardPatterns;
 /// </summary>
 public class PassHandler : CardPatternHandler
 {
-    public override bool CanHandle(List<Card> cards)
+    protected override bool CanHandle(List<Card> cards)
     {
         return cards.Count == 0;
     }
 
-    public override bool Validate(List<Card> cards)
+    protected override bool Validate(List<Card> cards)
     {
         return cards.Count == 0;
     }
 
-    public override CardPatternValue GetPattern(List<Card> cards)
+    protected override CardPatternValue GetPattern(List<Card> cards)
     {
         return new CardPatternValue(
             CardPatternType.Pass,
-            -1,  // Pass沒有Size
-            new List<Card>()
+            -1,
+            []
         );
     }
 }

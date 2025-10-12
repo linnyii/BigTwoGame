@@ -10,7 +10,7 @@ public class Suit : IComparable<Suit>, IEquatable<Suit>
     public static readonly Suit Heart = new("♥", 2, "H");
     public static readonly Suit Spade = new("♠", 3, "S");
 
-    private Suit(string symbol, int value, string name)
+    public Suit(string symbol, int value, string name)
     {
         Symbol = symbol;
         Value = value;

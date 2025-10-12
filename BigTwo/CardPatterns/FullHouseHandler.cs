@@ -8,12 +8,12 @@ namespace BigTwo.CardPatterns;
 /// </summary>
 public class FullHouseHandler : CardPatternHandler
 {
-    public override bool CanHandle(List<Card> cards)
+    protected override bool CanHandle(List<Card> cards)
     {
         return cards.Count == 5;
     }
 
-    public override bool Validate(List<Card> cards)
+    protected override bool Validate(List<Card> cards)
     {
         var rankGroups = cards.GroupBy(c => c.Rank)
                               .Select(g => g.Count())
@@ -25,17 +25,14 @@ public class FullHouseHandler : CardPatternHandler
                rankGroups[1] == 2;
     }
 
-    public override CardPatternValue GetPattern(List<Card> cards)
+    protected override CardPatternValue GetPattern(List<Card> cards)
     {
-
-        // 找出三條的牌
         var threeOfAKind = cards.GroupBy(c => c.Rank)
                                 .First(g => g.Count() == 3)
                                 .ToList();
 
-        // 葫蘆的大小由三條決定，取三條中最大的牌
         var highCard = threeOfAKind.Max()!;
-        var size = CalculateSize(highCard);
+        var size = highCard.CalculateSize();
 
         return new CardPatternValue(
             CardPatternType.FullHouse,

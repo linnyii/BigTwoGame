@@ -77,4 +77,9 @@ public class Card : IComparable<Card>, IEquatable<Card>
 
         return $"{suitChar}{RankSymbol}";
     }
+
+    public int CalculateSize()
+    {
+        return Rank.SizeValue * 4 + Suit.Value;
+    }
 }

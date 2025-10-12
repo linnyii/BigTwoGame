@@ -21,13 +21,13 @@ public class CardPatternValue : IComparable<CardPatternValue>
     /// <summary>
     /// 牌的內容
     /// </summary>
-    public List<Card> Value { get; }
+    public List<Card> PlayCards { get; }
 
-    public CardPatternValue(CardPatternType type, int size, List<Card> value)
+    public CardPatternValue(CardPatternType type, int size, List<Card> playCards)
     {
         Type = type;
         Size = size;
-        Value = value;
+        PlayCards = playCards;
     }
 
     /// <summary>
@@ -48,7 +48,7 @@ public class CardPatternValue : IComparable<CardPatternValue>
     /// <summary>
     /// 判斷是否比另一個牌型強
     /// </summary>
-    public bool IsStrongerThan(CardPatternValue other)
+    public bool IsBiggerThan(CardPatternValue other)
     {
         // 必須是相同牌型才能比較
         if (Type != other.Type)
@@ -83,7 +83,7 @@ public class CardPatternValue : IComparable<CardPatternValue>
         if (Type == CardPatternType.Pass)
             return typeName;
 
-        string cards = string.Join(" ", Value.Select(c => c.ToString()));
+        string cards = string.Join(" ", PlayCards.Select(c => c.ToString()));
         return $"{typeName}: {cards}";
     }
 }

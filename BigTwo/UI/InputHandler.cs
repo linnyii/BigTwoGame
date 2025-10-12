@@ -56,6 +56,7 @@ public static class InputHandler
             {
                 selectedCards.Add(cards[cardIndex]);
             }
+            //TODO: Handle if out of Cards range, need to input again
         }
         return selectedCards;
     }

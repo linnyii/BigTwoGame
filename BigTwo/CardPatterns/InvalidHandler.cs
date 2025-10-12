@@ -9,17 +9,17 @@ namespace BigTwo.CardPatterns;
 /// </summary>
 public class InvalidHandler : CardPatternHandler
 {
-    public override bool CanHandle(List<Card> cards)
+    protected override bool CanHandle(List<Card> cards)
     {
         return true;
     }
 
-    public override bool Validate(List<Card> cards)
+    protected override bool Validate(List<Card> cards)
     {
         return false;
     }
 
-    public override CardPatternValue GetPattern(List<Card> cards)
+    protected override CardPatternValue GetPattern(List<Card> cards)
     {
         return new CardPatternValue(
             CardPatternType.Invalid,

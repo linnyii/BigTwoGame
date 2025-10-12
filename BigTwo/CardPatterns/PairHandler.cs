@@ -8,26 +8,20 @@ namespace BigTwo.CardPatterns;
 /// </summary>
 public class PairHandler : CardPatternHandler
 {
-    public override bool CanHandle(List<Card> cards)
+    protected override bool CanHandle(List<Card> cards)
     {
         return cards.Count == 2;
     }
 
-    public override bool Validate(List<Card> cards)
+    protected override bool Validate(List<Card> cards)
     {
         return cards[0].Rank == cards[1].Rank;
     }
 
-    public override CardPatternValue GetPattern(List<Card> cards)
+    protected override CardPatternValue GetPattern(List<Card> cards)
     {
-        if (!Validate(cards))
-        {
-            return new CardPatternValue(CardPatternType.Invalid, 0, cards);
-        }
-
-        // 取最大的牌作為代表
-        Card highCard = cards.Max()!;
-        int size = CalculateSize(highCard);
+        var highCard = cards.Max()!;
+        var size = highCard.CalculateSize();
 
         return new CardPatternValue(
             CardPatternType.Pair,

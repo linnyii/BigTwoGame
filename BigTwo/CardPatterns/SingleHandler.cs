@@ -7,30 +7,25 @@ namespace BigTwo.CardPatterns;
 /// </summary>
 public class SingleHandler : CardPatternHandler
 {
-    public override bool CanHandle(List<Card> cards)
+    protected override bool CanHandle(List<Card> cards)
     {
         return cards.Count == 1;
     }
 
-    public override bool Validate(List<Card> cards)
+    protected override bool Validate(List<Card> cards)
     {
         return cards.Count == 1;
     }
 
-    public override CardPatternValue GetPattern(List<Card> cards)
+    protected override CardPatternValue GetPattern(List<Card> cards)
     {
-        if (!Validate(cards))
-        {
-            return new CardPatternValue(CardPatternType.Invalid, 0, cards);
-        }
-
-        Card card = cards[0];
-        int size = CalculateSize(card);
+        var card = cards[0];
+        var size = card.CalculateSize();
 
         return new CardPatternValue(
             CardPatternType.Single,
             size,
-            new List<Card> { card }
+            [card]
         );
     }
 }

@@ -15,23 +15,13 @@ public class Hand
         Cards.Add(card);
     }
 
-    /// <summary>
-    /// 移除指定的牌
-    /// </summary>
-    public bool RemoveCards(List<Card> cards)
+    public void RemoveCards(List<Card> cards)
     {
-        foreach (var card in cards)
-        {
-            if (!Cards.Contains(card))
-                return false;
-        }
-
         foreach (var card in cards)
         {
             Cards.Remove(card);
         }
 
-        return true;
     }
 
     public void Sort()

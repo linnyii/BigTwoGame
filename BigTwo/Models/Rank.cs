@@ -7,7 +7,7 @@ public class Rank : IComparable<Rank>, IEquatable<Rank>
     public int OrderValue { get; }
     public string Name { get; }
 
-    private Rank(string symbol, int sizeValue, int orderValue, string name)
+    public Rank(string symbol, int sizeValue, int orderValue, string name)
     {
         Symbol = symbol;
         SizeValue = sizeValue;

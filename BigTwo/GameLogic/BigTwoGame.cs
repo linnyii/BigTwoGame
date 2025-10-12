@@ -9,6 +9,7 @@ public class BigTwoGame
     private readonly List<Player> _players;
     private readonly Deck _deck;
     private CardPatternHandler _cardPatternHandler;
+    private readonly Card _clubThree = new(new Suit("♣", 0, "C"), new Rank("3", 0,3, "Three"));
     private const int MaxHandCardNumber = 13;
     private const int TotalPLayers = 4;
     private GameState GameState { get; }
@@ -119,17 +120,15 @@ public class BigTwoGame
     {
         var currentPlayer = GetCurrentPlayer();
         
-        var pattern = ValidateMove(cards);
+        var pattern = ValidatePlayerPlay(cards);
 
-        if (pattern == null || pattern.IsInvalid)
+        if (pattern!.IsInvalid)
         {
             return (false, "無效的牌型！");
         }
 
-        // 處理Pass
         if (pattern.IsPass)
         {
-            // 如果桌面是空的，不能Pass
             if (GameState.TopPlay == null)
             {
                 return (false, "桌面是空的，不能Pass！");
@@ -139,18 +138,15 @@ public class BigTwoGame
             return (true, $"{currentPlayer.Name} Pass");
         }
 
-        // 檢查首回合是否包含梅花3
         if (GameState.IsFirstRound)
         {
-            Card? clubThree = currentPlayer.Hand.GetClubThree();
-            if (clubThree != null && !cards.Contains(clubThree))
+            if (!pattern.PlayCards.Contains(_clubThree))
             {
                 return (false, "第一手必須包含梅花3！");
             }
             GameState.IsFirstRound = false;
         }
 
-        // 比較牌型大小
         var (canPlay, compareMessage) = ComparingSize(pattern);
         if (!canPlay)
         {
@@ -159,36 +155,46 @@ public class BigTwoGame
 
         currentPlayer.PlayCards(cards);
 
-        // 更新遊戲狀態
         GameState.UpdateTopPlay(currentPlayer, pattern);
 
-        return (true, $"{currentPlayer.Name} 出牌: {pattern}");
+        if (pattern.Type == CardPatternType.Pass)
+        {
+            return (true, $"玩家 {currentPlayer.Name} Pass");
+        }
+
+        var typeName = pattern.Type switch
+        {
+            CardPatternType.Single => "單張",
+            CardPatternType.Pair => "對子",
+            CardPatternType.Straight => "順子",
+            CardPatternType.FullHouse => "葫蘆",
+            _ => pattern.Type.ToString()
+        };
+
+        var cardsDisplay = string.Join(" ", pattern.PlayCards);
+        var message = $"玩家 {currentPlayer.Name} 打出了 {typeName} {cardsDisplay}";
+
+        return (true, message);
     }
 
-    private CardPatternValue? ValidateMove(List<Card> cards)
+    private CardPatternValue? ValidatePlayerPlay(List<Card> cards)
     {
         return _cardPatternHandler.Handle(cards);
     }
 
-    /// <summary>
-    /// 比較牌型大小
-    /// </summary>
     private (bool canPlay, string message) ComparingSize(CardPatternValue pattern)
     {
-        // 如果桌面是空的，可以出任意牌型
         if (GameState.TopPlay == null)
         {
             return (true, "");
         }
 
-        // 必須是相同牌型
         if (pattern.Type != GameState.TopPlay.Type)
         {
             return (false, $"必須出{GameState.TopPlay.Type}！");
         }
 
-        // 必須比桌面的牌大
-        if (!pattern.IsStrongerThan(GameState.TopPlay))
+        if (!pattern.IsBiggerThan(GameState.TopPlay))
         {
             return (false, "你的牌不夠大！");
         }
@@ -196,32 +202,17 @@ public class BigTwoGame
         return (true, "");
     }
 
-    /// <summary>
-    /// 檢查是否三家Pass
-    /// </summary>
-    public bool CheckThreePass()
+    private bool CheckThreePass()
     {
-        if (GameState.IsThreePass())
-        {
-            // 清空桌面
-            GameState.ClearTable();
+        if (!GameState.HasThreePass()) return false;
+        GameState.ClearTable();
             
-            // 將當前玩家設為最後出牌者
-            if (GameState.TopPlayer != null)
-            {
-                int topPlayerIndex = _players.IndexOf(GameState.TopPlayer);
-                GameState.CurrentPlayerIndex = topPlayerIndex;
-            }
-
-            return true;
-        }
-
-        return false;
+        var topPlayerIndex = _players.IndexOf(GameState.TopPlayer!);
+        GameState.CurrentPlayerIndex = topPlayerIndex;
+            
+        return true;
     }
 
-    /// <summary>
-    /// 檢查勝利者
-    /// </summary>
     private Player? CheckWinner()
     {
         foreach (var player in _players)
@@ -275,9 +266,7 @@ public class BigTwoGame
                 ConsoleUI.WaitForKey();
                 continue;
             }
-
-            ConsoleUI.DisplayMessage(message);
-
+            
             var winner = CheckWinner();
             if (winner != null)
             {
@@ -287,12 +276,6 @@ public class BigTwoGame
                 if (InputHandler.GetConfirmation("\n要再玩一局嗎？"))
                 {
                     InitializeFirstRound();
-                    
-                    var firstPlayer = GetCurrentPlayer();
-                    if (firstPlayer.HasClubThree())
-                    {
-                        ConsoleUI.DisplayFirstRoundHint(firstPlayer);
-                    }
                     
                     ConsoleUI.WaitForKey();
                     continue;

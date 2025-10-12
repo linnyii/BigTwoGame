@@ -11,15 +11,9 @@ public class Player(string name)
         Hand.AddCard(card);
     }
 
-    /// <summary>
-    /// 出牌
-    /// </summary>
-    public bool PlayCards(List<Card> cards)
+    public void PlayCards(List<Card> cards)
     {
-        if (!Hand.ContainsCards(cards))
-            return false;
-
-        return Hand.RemoveCards(cards);
+        Hand.RemoveCards(cards);
     }
 
     /// <summary>
