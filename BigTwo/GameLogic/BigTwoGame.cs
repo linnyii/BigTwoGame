@@ -172,7 +172,14 @@ public class BigTwoGame
             ConsoleUI.DisplayCurrentPlayer(currentPlayer);
             ConsoleUI.DisplayerHandCards(currentPlayer);
 
-            var  selectedCards= InputHandler.GetPlayerInput(currentPlayer);
+            var context = new GameContext
+            {
+                TopPlay = GameState.TopPlay,
+                IsFirstRound = GameState.IsFirstRound,
+                ClubThree = _clubThree
+            };
+            
+            var selectedCards = InputHandler.GetPlayerInput(currentPlayer, context);
             var (success, message) = HandlePlayerPlay(selectedCards);
 
             if (!success)

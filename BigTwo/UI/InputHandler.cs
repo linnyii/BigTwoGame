@@ -1,3 +1,4 @@
+using BigTwo.GameLogic;
 using BigTwo.Models;
 
 namespace BigTwo.UI;
@@ -7,7 +8,16 @@ public static class InputHandler
     private const int TotalPlayers = 4;
     private static readonly char[] Separator = [' ', ',', '\t'];
 
-    public static List<Card> GetPlayerInput(Player player)
+    public static List<Card> GetPlayerInput(Player player, GameContext? context = null)
+    {
+        // 判斷是 Human 還是 AI，調用各自的 GetSelectedCards
+        return player.GetSelectedCards(context);
+    }
+    
+    /// <summary>
+    /// 人類玩家的輸入方法
+    /// </summary>
+    public static List<Card> GetHumanInput(Player player)
     {
         while (true)
         {

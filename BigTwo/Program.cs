@@ -1,4 +1,5 @@
-﻿using BigTwo.CardPatterns;
+﻿using BigTwo.AI;
+using BigTwo.CardPatterns;
 using BigTwo.GameLogic;
 using BigTwo.Models;
 using BigTwo.UI;
@@ -14,6 +15,16 @@ public static class Program
         ConsoleUI.DisplayTitle();
 
         var cardPatternHandler = CreateHandlerChain();
+        
+        var aiStrategies = new List<IAIPlayStrategy>
+        {
+            new SinglePlayStrategy(),
+            new PairPlayStrategy(),
+            new StraightPlayStrategy(),
+            new FullHousePlayStrategy()
+        };
+        var strategyManager = new AIPlayStrategyManager(aiStrategies);
+        AIPlayer.SetStrategyManager(strategyManager);
         
         var players = CreatePlayers(cardPatternHandler);
         
@@ -46,7 +57,8 @@ public static class Program
                 ? playerNames[playerIndex].Trim()
                 : $"玩家 {playerIndex + 1}";
             
-            players.Add(new Player(playerName, cardPatternHandler));
+            // 目前所有玩家都是 HumanPlayer，未來可以在這裡決定哪些是 AI
+            players.Add(new HumanPlayer(playerName, cardPatternHandler));
         }
 
         return players;
