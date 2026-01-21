@@ -108,11 +108,6 @@ public class BigTwoGame
         currentPlayer.PlayCards(cards);
 
         GameState.UpdateTopPlayerPlay(currentPlayer, pattern);
-
-        if (pattern.Type == CardPatternType.Pass)
-        {
-            return (true, $"玩家 {currentPlayer.Name} Pass");
-        }
         
         var cardsDisplay = string.Join(" ", pattern.PlayCards);
         var message = $"玩家 {currentPlayer.Name} 打出了 {pattern.GetTypeMandarinName()} {cardsDisplay}";

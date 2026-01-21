@@ -107,5 +107,48 @@ public static class InputHandler
         Console.ForegroundColor = ConsoleColor.Gray;
         Console.WriteLine($"  → 使用預設名字: {defaultName}");
     }
+
+    /// <summary>
+    /// 詢問玩家類型（Human 或 AI）
+    /// </summary>
+    /// <param name="playerIndex">玩家索引（從 0 開始）</param>
+    /// <param name="playerName">玩家名稱</param>
+    /// <returns>true 表示 AI，false 表示 Human</returns>
+    public static bool AskPlayerType(int playerIndex, string playerName)
+    {
+        while (true)
+        {
+            Console.Write($"玩家 {playerIndex + 1} ({playerName}) 的類型 (H=人類, A=AI，直接按 Enter 預設為人類): ");
+            var input = Console.ReadLine()?.Trim().ToLower();
+            
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                Console.ForegroundColor = ConsoleColor.Gray;
+                Console.WriteLine($"  → 使用預設類型: 人類");
+                Console.ResetColor();
+                return false;
+            }
+            
+            if (input is "h" or "human" or "人" or "人類")
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine($"  → 類型已設定: 人類");
+                Console.ResetColor();
+                return false;
+            }
+            
+            if (input is "a" or "ai" or "機器人")
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine($"  → 類型已設定: AI");
+                Console.ResetColor();
+                return true;
+            }
+            
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("  無效輸入！請輸入 H (人類) 或 A (AI)");
+            Console.ResetColor();
+        }
+    }
 }
 

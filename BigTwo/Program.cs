@@ -15,16 +15,13 @@ public static class Program
         ConsoleUI.DisplayTitle();
 
         var cardPatternHandler = CreateHandlerChain();
-        
-        var aiStrategies = new List<IAIPlayStrategy>
-        {
+
+        AIPlayer.SetStrategyManager(new AIPlayStrategyManager([
             new SinglePlayStrategy(),
             new PairPlayStrategy(),
             new StraightPlayStrategy(),
             new FullHousePlayStrategy()
-        };
-        var strategyManager = new AIPlayStrategyManager(aiStrategies);
-        AIPlayer.SetStrategyManager(strategyManager);
+        ]));
         
         var players = CreatePlayers(cardPatternHandler);
         
@@ -51,17 +48,31 @@ public static class Program
         var playerNames = InputHandler.GetPlayerNames();
         var players = new List<Player>();
 
+        Console.WriteLine("\n請選擇每個玩家的類型：\n");
+
         for (var playerIndex = 0; playerIndex < TotalPlayers; playerIndex++)
         {
             var playerName = IsValidName(playerNames, playerIndex)
                 ? playerNames[playerIndex].Trim()
                 : $"玩家 {playerIndex + 1}";
-            
-            // 目前所有玩家都是 HumanPlayer，未來可以在這裡決定哪些是 AI
-            players.Add(new HumanPlayer(playerName, cardPatternHandler));
+
+            if (IsAI(playerIndex, playerName))
+            {
+                players.Add(new AIPlayer(playerName, cardPatternHandler));
+            }
+            else
+            {
+                players.Add(new HumanPlayer(playerName, cardPatternHandler));
+            }
         }
 
+        Console.WriteLine();
         return players;
+    }
+
+    private static bool IsAI(int playerIndex, string playerName)
+    {
+        return InputHandler.AskPlayerType(playerIndex, playerName);
     }
 
     private static bool IsValidName(List<string> playerNames, int playerIndex)

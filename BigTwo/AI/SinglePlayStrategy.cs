@@ -20,8 +20,7 @@ public class SinglePlayStrategy : IAIPlayStrategy
             var play = new List<Card> { card };
             var pattern = player.ValidatePlay(play);
             
-            if (!pattern.IsInvalid && 
-                pattern.Type == CardPatternType.Single && 
+            if (pattern is { IsInvalid: false, Type: CardPatternType.Single } && 
                 pattern.IsBiggerThan(topPlay))
             {
                 validPlays.Add(play);
