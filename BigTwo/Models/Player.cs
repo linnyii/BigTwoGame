@@ -7,7 +7,7 @@ public abstract class Player(string name, CardPatternHandler cardPatternHandler)
 {
     public string Name { get; } = name;
     public HandCards HandCards { get; } = new();
-    protected CardPatternHandler CardPatternHandler { get; } = cardPatternHandler;
+    private CardPatternHandler CardPatternHandler { get; } = cardPatternHandler;
 
     public void ReceiveCard(Card card)
     {
@@ -44,9 +44,6 @@ public abstract class Player(string name, CardPatternHandler cardPatternHandler)
         return CardPatternHandler.Handle(cards);
     }
 
-    /// <summary>
-    /// 抽象方法：讓 Human 和 AI 各自實作如何選擇牌
-    /// </summary>
     public abstract List<Card> GetSelectedCards(GameContext? context = null);
 }
 

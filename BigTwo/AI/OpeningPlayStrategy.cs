@@ -1,12 +1,8 @@
-using BigTwo.CardPatterns;
 using BigTwo.GameLogic;
 using BigTwo.Models;
 
 namespace BigTwo.AI;
 
-/// <summary>
-/// 開局策略：當桌面為空時選擇牌型
-/// </summary>
 public class OpeningPlayStrategy
 {
     public List<Card> SelectOpeningPlay(Player player, GameContext context)
@@ -25,15 +21,14 @@ public class OpeningPlayStrategy
     {
         var handCards = player.GetHandCards();
         
-        // 簡單策略：如果手上有梅花3，先出單張梅花3
         if (handCards.Contains(clubThree))
         {
-            return new List<Card> { clubThree };
+            return [clubThree];
         }
         
-        // 否則嘗試找出包含梅花3的最小牌型
-        // 這裡可以擴展為檢查對子、順子等
-        return new List<Card> { clubThree };
+        //Can implement other CardType with ClubThree
+        throw new InvalidOperationException(
+            $"玩家 {player.Name} 在第一輪被要求出包含梅花3的牌，但手上沒有梅花3。這表示遊戲邏輯出現錯誤。");
     }
 }
 
