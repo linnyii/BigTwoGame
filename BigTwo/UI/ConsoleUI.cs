@@ -14,7 +14,6 @@ public static class ConsoleUI
 
     public static void DisplayHandCards(Player player)
     {
-        Console.WriteLine($"{player.Name} 的手牌:");
         var cards = player.GetHandCards();
         
         for (var i = 0; i < cards.Count; i++)
@@ -79,20 +78,19 @@ public static class ConsoleUI
 
     public static void DisplayCurrentPlayer(Player currentPlayer)
     {
-        Console.WriteLine($"輪到{currentPlayer}了");
+        Console.WriteLine($"輪到{currentPlayer.Name}了");
     }
 
     public static void DisplayTopPlayerPlay(Player? gameStateTopPlayer, CardPatternValue? gameStateTopPlay)
     {
         if (gameStateTopPlayer == null || gameStateTopPlay == null)
         {
-            Console.WriteLine("目前桌面是空的");
             return;
         }
 
         var typeName = gameStateTopPlay.GetTypeMandarinName();
         var cards = string.Join(" ", gameStateTopPlay.PlayCards);
-        Console.WriteLine($"目前的 Top Player: {gameStateTopPlayer.Name}, Top Play: {typeName} {cards}");
+        Console.WriteLine($"玩家 : {gameStateTopPlayer.Name} 打出了  {typeName} {cards}");
     }
 }
 

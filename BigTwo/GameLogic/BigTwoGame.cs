@@ -186,21 +186,18 @@ public class BigTwoGame
             if (!success)
             {
                 ConsoleUI.DisplayMessage(message);
-                ConsoleUI.WaitForKey();
                 continue;
             }
             
             var winner = CheckWinner();
             if (winner != null)
             {
-                ConsoleUI.WaitForKey();
                 ConsoleUI.DisplayWinner(winner);
                 
                 if (InputHandler.ConfirmPlayAgain("\n要再玩一局嗎？"))
                 {
                     InitializeFirstRound();
                     
-                    ConsoleUI.WaitForKey();
                     continue;
                 }
                 
@@ -211,12 +208,10 @@ public class BigTwoGame
             if (CheckThreePass())
             {
                 ConsoleUI.DisplayThreePassMessage(GetCurrentPlayer());
-                ConsoleUI.WaitForKey();
                 continue;
             }
 
             MoveToNextPlayer();
-            ConsoleUI.WaitForKey();
         }
     }
 }

@@ -10,13 +10,9 @@ public static class InputHandler
 
     public static List<Card> GetPlayerInput(Player player, GameContext? context = null)
     {
-        // 判斷是 Human 還是 AI，調用各自的 GetSelectedCards
         return player.GetSelectedCards(context);
     }
     
-    /// <summary>
-    /// 人類玩家的輸入方法
-    /// </summary>
     public static List<Card> GetHumanInput(Player player)
     {
         while (true)
@@ -108,12 +104,6 @@ public static class InputHandler
         Console.WriteLine($"  → 使用預設名字: {defaultName}");
     }
 
-    /// <summary>
-    /// 詢問玩家類型（Human 或 AI）
-    /// </summary>
-    /// <param name="playerIndex">玩家索引（從 0 開始）</param>
-    /// <param name="playerName">玩家名稱</param>
-    /// <returns>true 表示 AI，false 表示 Human</returns>
     public static bool AskPlayerType(int playerIndex, string playerName)
     {
         while (true)

@@ -27,8 +27,6 @@ public static class Program
         
         var game = new BigTwoGame(players);
         
-        ConsoleUI.WaitForKey("準備開始遊戲，按任意鍵開始...");
-
         game.StartGame();
     }
 
