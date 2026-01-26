@@ -11,7 +11,6 @@ public class Suit(string symbol, int value, string name) : IComparable<Suit>, IE
     private static readonly Suit Spade = new("♠", 3, "S");
 
 
-    // 所有花色列表 (用於遍歷)
     public static readonly List<Suit> All = [Club, Diamond, Heart, Spade];
 
     public int CompareTo(Suit? other)
