@@ -5,6 +5,8 @@ namespace BigTwo.GameLogic;
 
 public class GameState
 {
+    private const int MaxPassCount = 3;
+    
     public Player? TopPlayer { get; private set; }
 
     public CardPatternValue? TopPlay { get; private set; }
@@ -41,6 +43,7 @@ public class GameState
 
     public void ClearTable()
     {
+        TopPlayer = null;
         TopPlay = null;
         ResetPassCount();
     }
@@ -54,11 +57,27 @@ public class GameState
 
     public bool HasThreePass()
     {
-        return PassCount >= 3;
+        return PassCount >= MaxPassCount;
     }
 
-    public void SetCurrentPlayerIndex(int currentPlayer)
+    public void SetCurrentPlayerIndex(int currentPlayer, int? maxPlayers = null)
     {
+        if (currentPlayer < 0)
+        {
+            throw new ArgumentOutOfRangeException(
+                nameof(currentPlayer), 
+                currentPlayer, 
+                "玩家索引不能為負數");
+        }
+        
+        if (maxPlayers.HasValue && currentPlayer >= maxPlayers.Value)
+        {
+            throw new ArgumentOutOfRangeException(
+                nameof(currentPlayer), 
+                currentPlayer, 
+                $"玩家索引 {currentPlayer} 超出範圍 [0, {maxPlayers.Value - 1}]");
+        }
+        
         CurrentPlayerIndex = currentPlayer;
     }
 

@@ -2,31 +2,32 @@ namespace BigTwo.Models;
 
 public class HandCards
 {
-    public readonly List<Card> Cards = [];
-    public int Count => Cards.Count;
+    private readonly List<Card> _cards = [];
+    
+    public IReadOnlyList<Card> Cards => _cards.AsReadOnly();
+    public int Count => _cards.Count;
 
     public void AddCard(Card card)
     {
-        Cards.Add(card);
+        _cards.Add(card);
     }
 
     public void RemoveCards(List<Card> cards)
     {
-        foreach (var card in cards)
-        {
-            Cards.Remove(card);
-        }
-
+        if (cards.Count == 0) return;
+        
+        var cardSet = new HashSet<Card>(cards);
+        _cards.RemoveAll(cardSet.Contains);
     }
 
     public void Sort()
     {
-        Cards.Sort();
+        _cards.Sort();
     }
 
     public bool ContainsClubThree()
     {
-        return Cards.Any(c => c.Suit == Suit.Club && c.Rank == Rank.Three);
+        return _cards.Any(c => c.Suit == Suit.Club && c.Rank == Rank.Three);
     }
 }
 

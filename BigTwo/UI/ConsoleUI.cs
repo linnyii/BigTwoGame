@@ -12,7 +12,7 @@ public static class ConsoleUI
         Console.WriteLine();
     }
 
-    public static void DisplayerHandCards(Player player)
+    public static void DisplayHandCards(Player player)
     {
         Console.WriteLine($"{player.Name} 的手牌:");
         var cards = player.GetHandCards();
@@ -72,7 +72,7 @@ public static class ConsoleUI
         Console.ReadKey();
     }
 
-    public static void DisPlayNewRound()
+    public static void DisplayNewRound()
     {
         Console.WriteLine("新的回合開始了");
     }
@@ -82,7 +82,7 @@ public static class ConsoleUI
         Console.WriteLine($"輪到{currentPlayer}了");
     }
 
-    public static void DisPlayTopPlayerPlay(Player? gameStateTopPlayer, CardPatternValue? gameStateTopPlay)
+    public static void DisplayTopPlayerPlay(Player? gameStateTopPlayer, CardPatternValue? gameStateTopPlay)
     {
         if (gameStateTopPlayer == null || gameStateTopPlay == null)
         {

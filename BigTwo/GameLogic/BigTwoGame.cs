@@ -35,9 +35,9 @@ public class BigTwoGame
         }
         
         
-        GameState.SetCurrentPlayerIndex(FindClubThreePlayer());
+        GameState.SetCurrentPlayerIndex(FindClubThreePlayer(), _players.Count);
         GameState.SetIsFirstRound(true);
-        ConsoleUI.DisPlayNewRound();
+        ConsoleUI.DisplayNewRound();
     }
 
     private void DealingCards()
@@ -60,7 +60,12 @@ public class BigTwoGame
                 return playerIndex;
             }
         }
-        return 0; 
+        
+        var playerCardCounts = string.Join(", ", 
+            _players.Select((p, i) => $"玩家{i + 1}: {p.HandCards.Count}張"));
+        
+        throw new InvalidOperationException(
+            $"找不到持有梅花3的玩家。各玩家手牌數: {playerCardCounts}。這表示發牌邏輯出現錯誤。");
     }
 
     private Player GetCurrentPlayer()
@@ -141,7 +146,7 @@ public class BigTwoGame
         GameState.ClearTable();
             
         var topPlayerIndex = _players.IndexOf(GameState.TopPlayer!);
-        GameState.SetCurrentPlayerIndex(topPlayerIndex);
+        GameState.SetCurrentPlayerIndex(topPlayerIndex, _players.Count);
             
         return true;
     }
@@ -153,7 +158,8 @@ public class BigTwoGame
 
     private void MoveToNextPlayer()
     {
-        GameState.SetCurrentPlayerIndex((GameState.CurrentPlayerIndex + 1) % 4);
+        var nextIndex = (GameState.CurrentPlayerIndex + 1) % _players.Count;
+        GameState.SetCurrentPlayerIndex(nextIndex, _players.Count);
     }
 
     public void StartGame()
@@ -162,10 +168,10 @@ public class BigTwoGame
         
         while (true)
         {
-            ConsoleUI.DisPlayTopPlayerPlay(GameState.TopPlayer, GameState.TopPlay);
+            ConsoleUI.DisplayTopPlayerPlay(GameState.TopPlayer, GameState.TopPlay);
             var currentPlayer = GetCurrentPlayer();
             ConsoleUI.DisplayCurrentPlayer(currentPlayer);
-            ConsoleUI.DisplayerHandCards(currentPlayer);
+            ConsoleUI.DisplayHandCards(currentPlayer);
 
             var context = new GameContext
             {
