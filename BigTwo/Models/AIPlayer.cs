@@ -7,9 +7,9 @@ namespace BigTwo.Models;
 public class AIPlayer(string name, CardPatternHandler cardPatternHandler) 
     : Player(name, cardPatternHandler)
 {
-    private static AIPlayStrategyManager? _strategyManager;
+    private static AiPlayStrategyManager? _strategyManager;
     
-    public static void SetStrategyManager(AIPlayStrategyManager strategyManager)
+    public static void SetStrategyManager(AiPlayStrategyManager strategyManager)
     {
         _strategyManager = strategyManager;
     }

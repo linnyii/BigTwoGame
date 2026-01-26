@@ -14,15 +14,13 @@ public class PairPlayStrategy : IAIPlayStrategy
         var validPlays = new List<List<Card>>();
         var topPlay = context.TopPlay!;
         
-        // 生成所有對子組合
         var pairs = GeneratePairs(handCards);
         
         foreach (var pair in pairs)
         {
             var pattern = player.ValidatePlay(pair);
             
-            if (!pattern.IsInvalid && 
-                pattern.Type == CardPatternType.Pair && 
+            if (pattern is { IsInvalid: false, Type: CardPatternType.Pair } && 
                 pattern.IsBiggerThan(topPlay))
             {
                 validPlays.Add(pair);
@@ -34,7 +32,6 @@ public class PairPlayStrategy : IAIPlayStrategy
     
     public List<Card> SelectOptimalPlay(List<List<Card>> validPlays, Player player, GameContext context)
     {
-        // 策略：選擇最小可打敗的對子
         return validPlays
             .OrderBy(play => play.Max(c => c.CalculateSize()))
             .First();
@@ -48,7 +45,6 @@ public class PairPlayStrategy : IAIPlayStrategy
         foreach (var group in rankGroups)
         {
             var cardsOfRank = group.ToList();
-            // 對於每種點數，生成所有可能的對子組合（考慮不同花色）
             for (var i = 0; i < cardsOfRank.Count; i++)
             {
                 for (var j = i + 1; j < cardsOfRank.Count; j++)

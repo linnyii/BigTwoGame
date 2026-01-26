@@ -14,7 +14,6 @@ public class FullHousePlayStrategy : IAIPlayStrategy
         var validPlays = new List<List<Card>>();
         var topPlay = context.TopPlay!;
         
-        // 生成所有葫蘆組合
         var fullHouses = GenerateFullHouses(handCards);
         
         foreach (var fullHouse in fullHouses)
@@ -34,7 +33,6 @@ public class FullHousePlayStrategy : IAIPlayStrategy
     
     public List<Card> SelectOptimalPlay(List<List<Card>> validPlays, Player player, GameContext context)
     {
-        // 策略：選擇最小可打敗的葫蘆（根據三張相同點數的最大牌）
         return validPlays
             .OrderBy(play => 
             {
@@ -52,7 +50,6 @@ public class FullHousePlayStrategy : IAIPlayStrategy
         var fullHouses = new List<List<Card>>();
         var rankGroups = cards.GroupBy(c => c.Rank).ToList();
         
-        // 找出所有可能的 3+2 組合
         for (var i = 0; i < rankGroups.Count; i++)
         {
             var threeGroup = rankGroups[i];

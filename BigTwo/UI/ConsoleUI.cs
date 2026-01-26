@@ -5,13 +5,6 @@ namespace BigTwo.UI;
 
 public static class ConsoleUI
 {
-    public static void DisplayTitle()
-    {
-        Console.Clear();
-        Console.WriteLine("         welcome Big Two            ");
-        Console.WriteLine();
-    }
-
     public static void DisplayHandCards(Player player)
     {
         var cards = player.GetHandCards();
@@ -65,12 +58,6 @@ public static class ConsoleUI
         Console.ResetColor();
     }
 
-    public static void WaitForKey(string message = "按任意鍵繼續...")
-    {
-        Console.WriteLine(message);
-        Console.ReadKey();
-    }
-
     public static void DisplayNewRound()
     {
         Console.WriteLine("新的回合開始了");
@@ -90,7 +77,7 @@ public static class ConsoleUI
 
         var typeName = gameStateTopPlay.GetTypeMandarinName();
         var cards = string.Join(" ", gameStateTopPlay.PlayCards);
-        Console.WriteLine($"玩家 : {gameStateTopPlayer.Name} 打出了  {typeName} {cards}");
+        Console.WriteLine($"玩家 {gameStateTopPlayer.Name} 打出了  {typeName} {cards}");
     }
 }
 

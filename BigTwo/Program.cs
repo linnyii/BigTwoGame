@@ -12,11 +12,10 @@ public static class Program
 
     private static void Main()
     {
-        ConsoleUI.DisplayTitle();
 
         var cardPatternHandler = CreateHandlerChain();
 
-        AIPlayer.SetStrategyManager(new AIPlayStrategyManager([
+        AIPlayer.SetStrategyManager(new AiPlayStrategyManager([
             new SinglePlayStrategy(),
             new PairPlayStrategy(),
             new StraightPlayStrategy(),

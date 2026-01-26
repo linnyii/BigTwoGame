@@ -9,7 +9,6 @@ public class HumanPlayer(string name, CardPatternHandler cardPatternHandler)
 {
     public override List<Card> GetSelectedCards(GameContext? context = null)
     {
-        // 人類玩家使用原本的輸入方式
         return InputHandler.GetHumanInput(this);
     }
 }
